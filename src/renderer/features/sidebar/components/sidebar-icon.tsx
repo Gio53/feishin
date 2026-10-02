@@ -1,4 +1,6 @@
 import {
+    RiAddCircleFill,
+    RiAddCircleLine,
     RiAlbumFill,
     RiAlbumLine,
     RiFlag2Fill,
@@ -9,6 +11,7 @@ import {
     RiHeartLine,
     RiHome6Fill,
     RiHome6Line,
+    RiListCheck,
     RiMusic2Fill,
     RiMusic2Line,
     RiPlayFill,
@@ -57,6 +60,12 @@ export const SidebarIcon = ({ active, route, size }: SidebarIconProps) => {
             case AppRoute.LIBRARY_FOLDERS:
                 if (isActive) return <RiFolder3Fill size={size} />;
                 return <RiFolder3Line size={size} />;
+            case AppRoute.MUSIC_REQUEST_SEARCH:
+                if (isActive) return <RiAddCircleFill size={size} />;
+                return <RiAddCircleLine size={size} />;
+            case AppRoute.MUSIC_REQUESTS:
+                if (isActive) return <RiListCheck size={size} />;
+                return <RiListCheck size={size} />;
             case AppRoute.LIBRARY_GENRES:
                 if (isActive) return <RiFlag2Fill size={size} />;
                 return <RiFlag2Line size={size} />;

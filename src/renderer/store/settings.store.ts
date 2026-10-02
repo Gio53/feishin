@@ -552,6 +552,8 @@ export const GeneralSettingsSchema = z.object({
     listenBrainz: z.boolean(),
     microtonalPitchControls: z.boolean(),
     musicBrainz: z.boolean(),
+    musicRequestToken: z.string().default(''),
+    musicRequestUrl: z.string().default(''),
     nativeAspectRatio: z.boolean(),
     nativeSpotify: z.boolean(),
     passwordStore: z.string().optional(),
@@ -1237,6 +1239,18 @@ export const sidebarItems: SidebarItemType[] = [
         route: AppRoute.RADIO,
     },
     {
+        disabled: false,
+        id: 'Music request',
+        label: 'Request',
+        route: AppRoute.MUSIC_REQUEST_SEARCH,
+    },
+    {
+        disabled: false,
+        id: 'My requests',
+        label: 'My Requests',
+        route: AppRoute.MUSIC_REQUESTS,
+    },
+    {
         disabled: true,
         id: 'Settings',
         label: i18n.t('page.sidebar.settings'),
@@ -1376,6 +1390,8 @@ const initialState: SettingsState = {
         listenBrainz: true,
         microtonalPitchControls: false,
         musicBrainz: true,
+        musicRequestToken: '',
+        musicRequestUrl: '',
         nativeAspectRatio: false,
         nativeSpotify: false,
         passwordStore: undefined,
@@ -2931,10 +2947,32 @@ export const useSettingsStore = createWithEqualityFn<SettingsSlice>()(
                     });
                 }
 
+                if (version < 35) {
+                    state.general.musicRequestUrl = state.general.musicRequestUrl || '';
+                    state.general.musicRequestToken = state.general.musicRequestToken || '';
+                    const sidebarIds = new Set(state.general.sidebarItems.map((item) => item.id));
+                    if (!sidebarIds.has('Music request')) {
+                        state.general.sidebarItems.push({
+                            disabled: false,
+                            id: 'Music request',
+                            label: 'Request',
+                            route: AppRoute.MUSIC_REQUEST_SEARCH,
+                        });
+                    }
+                    if (!sidebarIds.has('My requests')) {
+                        state.general.sidebarItems.push({
+                            disabled: false,
+                            id: 'My requests',
+                            label: 'My Requests',
+                            route: AppRoute.MUSIC_REQUESTS,
+                        });
+                    }
+                }
+
                 return persistedState;
             },
             name: 'store_settings',
-            version: 34,
+            version: 35,
         },
     ),
 );

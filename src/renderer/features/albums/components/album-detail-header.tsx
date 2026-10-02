@@ -9,6 +9,7 @@ import { queryKeys } from '/@/renderer/api/query-keys';
 import { albumQueries } from '/@/renderer/features/albums/api/album-api';
 import { JoinedArtists } from '/@/renderer/features/albums/components/joined-artists';
 import { ContextMenuController } from '/@/renderer/features/context-menu/context-menu-controller';
+import { RequestControl } from '/@/renderer/features/music-request/request-control';
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import {
     LibraryHeader,
@@ -289,6 +290,21 @@ export const AlbumDetailHeader = forwardRef<HTMLDivElement>((_props, ref) => {
                         onRating={handleUpdateRating}
                         onShuffle={() => handlePlay(Play.SHUFFLE)}
                         rating={detailQuery?.data?.userRating || 0}
+                    />
+                    <RequestControl
+                        confirmTitle="Request this album"
+                        inLibrary
+                        label="Request this album"
+                        payload={{
+                            album: detailQuery?.data?.name || '',
+                            artist: detailQuery?.data?.albumArtistName || '',
+                            jellyfinAlbumId: albumId,
+                            musicbrainzAlbumId:
+                                detailQuery?.data?.mbzReleaseGroupId ||
+                                detailQuery?.data?.mbzId ||
+                                undefined,
+                            type: 'album',
+                        }}
                     />
                 </Stack>
             </LibraryHeader>

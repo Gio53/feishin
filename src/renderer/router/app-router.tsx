@@ -20,6 +20,14 @@ const AlbumListRoute = lazy(() => import('/@/renderer/features/albums/routes/alb
 
 const SongListRoute = lazy(() => import('/@/renderer/features/songs/routes/song-list-route'));
 
+const MusicRequestSearchRoute = lazy(
+    () => import('/@/renderer/features/music-request/music-request-search-route'),
+);
+
+const MyRequestsRoute = lazy(
+    () => import('/@/renderer/features/music-request/my-requests-route'),
+);
+
 const PlaylistDetailSongListRoute = lazy(
     () => import('/@/renderer/features/playlists/routes/playlist-detail-song-list-route'),
 );
@@ -230,6 +238,14 @@ export const AppRouter = () => {
                                         <Route element={<HomeRoute />} index />
                                         <Route element={<HomeRoute />} path={AppRoute.HOME} />
                                         <Route element={<SearchRoute />} path={AppRoute.SEARCH} />
+                                        <Route
+                                            element={<MusicRequestSearchRoute />}
+                                            path={AppRoute.MUSIC_REQUEST_SEARCH}
+                                        />
+                                        <Route
+                                            element={<MyRequestsRoute />}
+                                            path={AppRoute.MUSIC_REQUESTS}
+                                        />
                                         <Route
                                             element={<FavoritesRoute />}
                                             path={AppRoute.FAVORITES}

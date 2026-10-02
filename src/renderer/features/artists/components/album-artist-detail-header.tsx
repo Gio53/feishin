@@ -11,6 +11,7 @@ import { getArtistAlbumsGrouped } from '/@/renderer/features/artists/hooks/use-a
 import { useDeleteArtistImage } from '/@/renderer/features/artists/mutations/delete-artist-image-mutation';
 import { useUploadArtistImage } from '/@/renderer/features/artists/mutations/upload-artist-image-mutation';
 import { ContextMenuController } from '/@/renderer/features/context-menu/context-menu-controller';
+import { RequestControl } from '/@/renderer/features/music-request/request-control';
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import {
     LibraryHeader,
@@ -320,6 +321,16 @@ export const AlbumArtistDetailHeader = forwardRef<HTMLDivElement, AlbumArtistDet
                         onRating={showRating ? handleUpdateRating : undefined}
                         onShuffle={() => handlePlay(Play.SHUFFLE)}
                         rating={detailQuery.data?.userRating || 0}
+                    />
+                    <RequestControl
+                        confirmTitle="Request missing albums"
+                        label="Request all missing albums"
+                        payload={{
+                            artist: detailQuery.data?.name || '',
+                            jellyfinArtistId: routeId,
+                            musicbrainzArtistId: detailQuery.data?.mbz || undefined,
+                            type: 'artist',
+                        }}
                     />
                 </Stack>
             </LibraryHeader>
